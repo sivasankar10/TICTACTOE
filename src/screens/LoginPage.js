@@ -31,14 +31,13 @@ const LoginPage = ({ navigation }) => {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <TouchableWithoutFeedback>
       <View style={styles.container}>
         <TextInput
           style={styles.input}
           placeholder="Username"
           value={username}
           onChangeText={setUsername}
-          
           returnKeyType="done"
         />
         <TextInput

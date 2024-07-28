@@ -48,7 +48,7 @@ const CreateGame = ({ navigation }) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.startButton}
-            onPress={() => navigation.navigate('GamePage', { gameId })}
+            onPress={() => navigation.navigate('GamePage', { gameId, username })}
           >
             <Text style={styles.startButtonText}>Start Game</Text>
           </TouchableOpacity>
