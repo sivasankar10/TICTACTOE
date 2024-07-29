@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet, Alert } from 'react-native';
 import axios from 'axios';
+import BackgroundWrapper from './BackgroundWrapper'; // Ensure this path is correct
 
 const JoinGame = ({ navigation }) => {
   const [username, setUsername] = useState('');
@@ -12,6 +13,7 @@ const JoinGame = ({ navigation }) => {
         username: username,
         game_id: gameId,
       });
+
       if (response.status === 200) {
         navigation.navigate('GamePage', { username, gameId });
       } else {
@@ -24,24 +26,26 @@ const JoinGame = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Join an Existing Game</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Enter your username"
-        value={username}
-        onChangeText={setUsername}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Enter Game ID"
-        value={gameId}
-        onChangeText={setGameId}
-      />
-      <TouchableOpacity style={styles.button} onPress={joinGame}>
-        <Text style={styles.buttonText}>Start Game</Text>
-      </TouchableOpacity>
-    </View>
+    <BackgroundWrapper>
+      <View style={styles.container}>
+        <Text style={styles.title}>Join an Existing Game</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter your username"
+          value={username}
+          onChangeText={setUsername}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Enter Game ID"
+          value={gameId}
+          onChangeText={setGameId}
+        />
+        <TouchableOpacity style={styles.button} onPress={joinGame}>
+          <Text style={styles.buttonText}>Start Game</Text>
+        </TouchableOpacity>
+      </View>
+    </BackgroundWrapper>
   );
 };
 
@@ -51,11 +55,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
-    backgroundColor: '#f0f0f0',
+    width: '100%',
+    height: '100%',
   },
   title: {
     fontSize: 24,
     marginBottom: 20,
+    color: '#fff', // Ensure text is readable against the background
   },
   input: {
     width: '80%',

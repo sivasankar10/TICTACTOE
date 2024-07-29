@@ -13,6 +13,7 @@ const Stack = createStackNavigator();
 
 function App() {
   return (
+    
     <NavigationContainer>
       <Stack.Navigator initialRouteName="LoginPage">
         <Stack.Screen name="LoginPage" component={LoginPage} />
@@ -23,6 +24,8 @@ function App() {
         <Stack.Screen name="GamePage" component={GamePage}/>
       </Stack.Navigator>
     </NavigationContainer>
+   
+    
   );
 }
 

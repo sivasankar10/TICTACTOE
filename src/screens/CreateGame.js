@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet, Alert, ActivityIndicator, Clipboard } from 'react-native';
 import axios from 'axios';
+import BackgroundWrapper from './BackgroundWrapper';
 
 const CreateGame = ({ navigation }) => {
   const [username, setUsername] = useState('');
@@ -28,33 +29,35 @@ const CreateGame = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Create a New Game</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Enter your username"
-        value={username}
-        onChangeText={setUsername}
-      />
-      <TouchableOpacity style={styles.button} onPress={createGame}>
-        <Text style={styles.buttonText}>Create Game</Text>
-      </TouchableOpacity>
-      {loading && <ActivityIndicator size="large" color="#007bff" />}
-      {gameId && (
-        <View style={styles.gameIdContainer}>
-          <Text style={styles.gameIdText}>Game ID: {gameId}</Text>
-          <TouchableOpacity onPress={copyGameIdToClipboard}>
-            <Text style={styles.copyText}>Copy Game ID</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.startButton}
-            onPress={() => navigation.navigate('GamePage', { gameId, username })}
-          >
-            <Text style={styles.startButtonText}>Start Game</Text>
-          </TouchableOpacity>
-        </View>
-      )}
-    </View>
+    <BackgroundWrapper>
+      <View style={styles.container}>
+        <Text style={styles.title}>Create a New Game</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter your username"
+          value={username}
+          onChangeText={setUsername}
+        />
+        <TouchableOpacity style={styles.button} onPress={createGame}>
+          <Text style={styles.buttonText}>Create Game</Text>
+        </TouchableOpacity>
+        {loading && <ActivityIndicator size="large" color="#007bff" />}
+        {gameId && (
+          <View style={styles.gameIdContainer}>
+            <Text style={styles.gameIdText}>Game ID: {gameId}</Text>
+            <TouchableOpacity onPress={copyGameIdToClipboard}>
+              <Text style={styles.copyText}>Copy Game ID</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.startButton}
+              onPress={() => navigation.navigate('GamePage', { gameId, username })}
+            >
+              <Text style={styles.startButtonText}>Start Game</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+      </View>
+    </BackgroundWrapper>
   );
 };
 
@@ -64,11 +67,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
-    backgroundColor: '#f0f0f0',
   },
   title: {
     fontSize: 24,
     marginBottom: 20,
+    color: '#fff', // Adjust text color for better visibility on the background
   },
   input: {
     width: '80%',
@@ -98,7 +101,7 @@ const styles = StyleSheet.create({
   },
   gameIdText: {
     fontSize: 18,
-    color: '#333',
+    color: '#fff', // Adjust text color for better visibility on the background
   },
   copyText: {
     color: '#007bff',

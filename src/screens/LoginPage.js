@@ -1,6 +1,7 @@
+// src/components/LoginPage.js
 import React, { useState } from 'react';
-import {
-  View,TextInput,TouchableOpacity,Text,StyleSheet,Keyboard,TouchableWithoutFeedback,} from 'react-native';
+import { View, TextInput, TouchableOpacity, Text, StyleSheet, Keyboard, TouchableWithoutFeedback } from 'react-native';
+import BackgroundWrapper from './BackgroundWrapper';
 
 const LoginPage = ({ navigation }) => {
   const [username, setUsername] = useState('');
@@ -31,40 +32,40 @@ const LoginPage = ({ navigation }) => {
   };
 
   return (
-    <TouchableWithoutFeedback>
-      <View style={styles.container}>
-        <TextInput
-          style={styles.input}
-          placeholder="Username"
-          value={username}
-          onChangeText={setUsername}
-          returnKeyType="done"
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Password"
-          secureTextEntry
-          value={password}
-          onChangeText={setPassword}
-          returnKeyType="done"
-        />
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => {
-            handleLogin();
-          }}
-        >
-          <Text style={styles.buttonText}>Login</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.link}
-          onPress={() => navigation.navigate('SignupPage')}
-        >
-          <Text style={styles.linkText}>Don't Have an Account? Signup!</Text>
-        </TouchableOpacity>
-        {error ? <Text style={styles.error}>{error}</Text> : null}
-      </View>
-    </TouchableWithoutFeedback>
+    <BackgroundWrapper>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.container}>
+          <TextInput
+            style={styles.input}
+            placeholder="Username"
+            value={username}
+            onChangeText={setUsername}
+            returnKeyType="done"
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Password"
+            secureTextEntry
+            value={password}
+            onChangeText={setPassword}
+            returnKeyType="done"
+          />
+          <TouchableOpacity
+            style={styles.button}
+            onPress={handleLogin}
+          >
+            <Text style={styles.buttonText}>Login</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.link}
+            onPress={() => navigation.navigate('SignupPage')}
+          >
+            <Text style={styles.linkText}>Don't Have an Account? Signup!</Text>
+          </TouchableOpacity>
+          {error ? <Text style={styles.error}>{error}</Text> : null}
+        </View>
+      </TouchableWithoutFeedback>
+    </BackgroundWrapper>
   );
 };
 
@@ -73,7 +74,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     padding: 16,
-    backgroundColor: '#f0f0f0',
   },
   input: {
     height: 40,

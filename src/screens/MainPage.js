@@ -1,14 +1,11 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet,ImageBackground } from 'react-native';
+import BackgroundWrapper from './BackgroundWrapper';
 
 
 const MainPage = ({ navigation }) => {
   return (
-    <ImageBackground
-      uri="https://your-image-url.com/image.jpg"
-      style={styles.background}
-      contentFit="cover"
-    >
+    <BackgroundWrapper>
       <View style={styles.container}>
         <TouchableOpacity
           style={styles.button}
@@ -23,7 +20,8 @@ const MainPage = ({ navigation }) => {
           <Text style={styles.buttonText}>Join Game</Text>
         </TouchableOpacity>
       </View>
-    </ImageBackground>
+      </BackgroundWrapper>
+    
   );
 };
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ImageBackground, Alert } from 'react-native';
 import axios from 'axios';
 
 const GamePage = ({ route }) => {
@@ -52,32 +52,40 @@ const GamePage = ({ route }) => {
   };
 
   const makeMove = async (index) => {
-   
-
     try {
       const response = await axios.post('http://3.139.54.170:8000/make_move', {
         username: username,
         game_id: gameId,
         move: index,
       });
-
-      if (response.data.message === 'Move made') {
-        setBoard(response.data.board.split(''));
-        setCurrentPlayer(response.data.current_player);
-        // setWinner(response.data.winner);
+  
+      const { board, current_player, message, winner } = response.data;
+  
+      if (message === 'Move made') {
+        setBoard(board.split(''));
+        setCurrentPlayer(current_player);
+        setWinner(winner);
+      } else if (message === 'Invalid move') {
+        Alert.alert('Error', 'Invalid move. Please try again.');
+      } else if (message === "It's not your turn") {
+        Alert.alert('Error', "It's not your turn.");
+      } else if (message === 'Game already has a winner') {
+        setBoard(board.split(''));
+        setWinner(winner);
+        Alert.alert('Game Over', `The game has already ended.`);
       } else {
-        Alert.alert('Error', response.data.message);
+        Alert.alert('Error', message);
       }
     } catch (error) {
-      console.error(error);
-      Alert.alert('Error', 'Could not make move. Please try again.');
+      console.error('Error:', error);
+      Alert.alert('Error', 'An error occurred while making the move.');
     }
   };
-
+  
   const renderBox = (index) => (
     <TouchableOpacity
       key={index}
-      style={styles.box}
+      style={[styles.box, board[index] === 'X' ? styles.yellow : board[index] === 'O' ? styles.orange : null]}
       onPress={() => makeMove(index)}
     >
       <Text style={styles.boxText}>{board[index]}</Text>
@@ -85,34 +93,46 @@ const GamePage = ({ route }) => {
   );
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Game ID: {gameId}</Text>
-      <Text style={styles.title}>You are: {playerRole}</Text>
-      <View style={styles.board}>
-        {board.map((_, index) => renderBox(index))}
+    <ImageBackground
+      source={require('../assets/background.png')} 
+      style={styles.background}
+    >
+      <View style={styles.container}>
+        <Text style={styles.title}>Game ID: {gameId}</Text>
+        <Text style={styles.title}>Player Turn: {currentPlayer}</Text>
+
+        <View style={styles.board}>
+          {board.map((_, index) => renderBox(index))}
+        </View>
+        {winner ? (
+          <Text style={styles.winnerText}>Winner: {winner}</Text>
+        ) : (
+          <Text style={styles.turnText}>
+            {currentPlayer === playerRole ? 'Your turn' : 'Opponent\'s turn'}
+          </Text>
+        )}
       </View>
-      {winner ? (
-        <Text style={styles.winnerText}>Winner: {winner}</Text>
-      ) : (
-        <Text style={styles.turnText}>
-          {currentPlayer === playerRole ? 'Your turn' : 'Opponent\'s turn'}
-        </Text>
-      )}
-    </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    resizeMode: 'cover', 
+
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
-    backgroundColor: '#f0f0f0',
   },
   title: {
     fontSize: 20,
+    fontFamily: 'sans-serif',
     marginBottom: 20,
+    color: 'white',
   },
   board: {
     width: '80%',
@@ -127,9 +147,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     borderColor: '#333',
+    borderRadius: 6,
+    borderWidth: 3,
   },
   boxText: {
     fontSize: 32,
+    color: 'black',
     fontWeight: 'bold',
   },
   winnerText: {
@@ -140,7 +163,13 @@ const styles = StyleSheet.create({
   turnText: {
     fontSize: 18,
     marginTop: 20,
-    color: '#333',
+    color: 'white',
+  },
+  yellow: {
+    backgroundColor: 'yellow',
+  },
+  orange: {
+    backgroundColor: 'orange',
   },
 });
 
