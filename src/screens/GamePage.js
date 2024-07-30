@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontFamily: 'sans-serif',
+    fontFamily: 'Times New Roman',
     marginBottom: 20,
     color: 'white',
   },

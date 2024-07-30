@@ -1,11 +1,11 @@
-// src/components/BackgroundWrapper.js
+// BackgroundWrapper.js
 import React from 'react';
-import { View, ImageBackground, StyleSheet } from 'react-native';
+import { View, StyleSheet, ImageBackground } from 'react-native';
 
 const BackgroundWrapper = ({ children }) => {
   return (
     <ImageBackground
-      source={require('../assets/background.png')} // Make sure this path is correct
+      source={require('../assets/background.png')} 
       style={styles.background}
     >
       {children}
@@ -16,7 +16,9 @@ const BackgroundWrapper = ({ children }) => {
 const styles = StyleSheet.create({
   background: {
     flex: 1,
-    resizeMode: 'cover', // This makes sure the image covers the entire screen
+    resizeMode: 'cover',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

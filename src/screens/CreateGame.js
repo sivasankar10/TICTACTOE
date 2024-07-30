@@ -7,7 +7,7 @@ const CreateGame = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [gameId, setGameId] = useState(null);
   const [loading, setLoading] = useState(false);
-
+  const [message, setMessage] = useState('');
   const createGame = async () => {
     setLoading(true);
     try {
@@ -23,9 +23,11 @@ const CreateGame = ({ navigation }) => {
     }
   };
 
+
   const copyGameIdToClipboard = () => {
     Clipboard.setString(gameId);
     Alert.alert('Copied to Clipboard', 'The Game ID has been copied to your clipboard.');
+    
   };
 
   return (
