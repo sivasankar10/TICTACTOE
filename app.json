@@ -18,10 +18,16 @@
       "adaptiveIcon": {
         "foregroundImage": "../assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.siva10.tictactoe"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "bb4f9c4a-deaa-4998-90c3-419265df3d0d"
+      }
     }
   }
 }
